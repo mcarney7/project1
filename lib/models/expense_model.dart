@@ -6,7 +6,7 @@ class Expense {
 
   Expense({this.id, this.description, this.amount, this.date});
 
-  // Convert an Expense into a Map. Useful for inserting data into SQLite.
+  // Convert an Expense into a Map for SQLite
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -16,7 +16,7 @@ class Expense {
     };
   }
 
-  // Extract an Expense object from a Map. Useful for retrieving data from SQLite.
+  // Create an Expense object from a Map
   factory Expense.fromMap(Map<String, dynamic> map) {
     return Expense(
       id: map['id'],

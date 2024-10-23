@@ -6,7 +6,7 @@ class Income {
 
   Income({this.id, this.source, this.amount, this.date});
 
-  // Convert an Income into a Map. Useful for inserting data into SQLite.
+  // Convert Income into a Map for SQLite
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -16,7 +16,7 @@ class Income {
     };
   }
 
-  // Extract an Income object from a Map. Useful for retrieving data from SQLite.
+  // Create Income object from a Map
   factory Income.fromMap(Map<String, dynamic> map) {
     return Income(
       id: map['id'],

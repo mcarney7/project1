@@ -6,7 +6,7 @@ class SavingsGoal {
 
   SavingsGoal({this.id, this.goalName, this.goalAmount, this.currentAmount});
 
-  // Convert a SavingsGoal into a Map. Useful for inserting data into SQLite.
+  // Convert a SavingsGoal into a Map for SQLite
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -16,7 +16,7 @@ class SavingsGoal {
     };
   }
 
-  // Extract a SavingsGoal object from a Map. Useful for retrieving data from SQLite.
+  // Create SavingsGoal object from a Map
   factory SavingsGoal.fromMap(Map<String, dynamic> map) {
     return SavingsGoal(
       id: map['id'],

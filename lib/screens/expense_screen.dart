@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:project1/services/db_helper.dart';
 
 class ExpenseScreen extends StatefulWidget {
   @override
@@ -9,11 +9,15 @@ class ExpenseScreen extends StatefulWidget {
 class _ExpenseScreenState extends State<ExpenseScreen> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
+  final DatabaseHelper dbHelper = DatabaseHelper.instance;
 
   Future<void> addExpense() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    double totalExpenses = prefs.getDouble('expenses') ?? 0;
-    prefs.setDouble('expenses', totalExpenses + double.parse(amountController.text));
+    Map<String, dynamic> expense = {
+      'description': descriptionController.text,
+      'amount': double.parse(amountController.text),
+      'date': DateTime.now().toString(),
+    };
+    await dbHelper.insertExpense(expense);
     Navigator.pop(context);
   }
 

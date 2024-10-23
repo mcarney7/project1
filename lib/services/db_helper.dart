@@ -5,23 +5,28 @@ class DatabaseHelper {
   static final _databaseName = "girl_math_finance.db";
   static final _databaseVersion = 1;
 
+  // Table names
   static final tableExpenses = 'expenses';
   static final tableIncome = 'income';
   static final tableSavings = 'savings';
 
+  // Column names
   static final columnId = 'id';
   static final columnDescription = 'description';
   static final columnAmount = 'amount';
   static final columnDate = 'date';
 
-  static final columnSource = 'source'; // For income
+  // Additional columns for income
+  static final columnSource = 'source';
 
-  static final columnGoalName = 'goalName'; // For savings goals
+  // Additional columns for savings goals
+  static final columnGoalName = 'goalName';
   static final columnGoalAmount = 'goalAmount';
   static final columnCurrentAmount = 'currentAmount';
 
-  // Singleton pattern
+  // Singleton instance
   static final DatabaseHelper instance = DatabaseHelper._init();
+
   static Database _database;
 
   DatabaseHelper._init();
@@ -38,6 +43,7 @@ class DatabaseHelper {
   }
 
   Future _onCreate(Database db, int version) async {
+    // Create table for expenses
     await db.execute('''
       CREATE TABLE $tableExpenses (
         $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -47,6 +53,7 @@ class DatabaseHelper {
       )
     ''');
 
+    // Create table for income
     await db.execute('''
       CREATE TABLE $tableIncome (
         $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -56,6 +63,7 @@ class DatabaseHelper {
       )
     ''');
 
+    // Create table for savings goals
     await db.execute('''
       CREATE TABLE $tableSavings (
         $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -67,6 +75,7 @@ class DatabaseHelper {
   }
 
   // INSERT operations
+
   Future<int> insertExpense(Map<String, dynamic> row) async {
     Database db = await instance.database;
     return await db.insert(tableExpenses, row);
@@ -83,6 +92,7 @@ class DatabaseHelper {
   }
 
   // QUERY operations
+
   Future<List<Map<String, dynamic>>> queryAllExpenses() async {
     Database db = await instance.database;
     return await db.query(tableExpenses);
@@ -98,7 +108,20 @@ class DatabaseHelper {
     return await db.query(tableSavings);
   }
 
+  // UPDATE operations
+
+  Future<int> updateSavingsGoal(int id, Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    return await db.update(tableSavings, row, where: '$columnId = ?', whereArgs: [id]);
+  }
+
+  Future<int> updateExpense(int id, Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    return await db.update(tableExpenses, row, where: '$columnId = ?', whereArgs: [id]);
+  }
+
   // DELETE operations
+
   Future<int> deleteExpense(int id) async {
     Database db = await instance.database;
     return await db.delete(tableExpenses, where: '$columnId = ?', whereArgs: [id]);
@@ -112,16 +135,5 @@ class DatabaseHelper {
   Future<int> deleteSavingsGoal(int id) async {
     Database db = await instance.database;
     return await db.delete(tableSavings, where: '$columnId = ?', whereArgs: [id]);
-  }
-
-  // UPDATE operations (Optional)
-  Future<int> updateExpense(int id, Map<String, dynamic> row) async {
-    Database db = await instance.database;
-    return await db.update(tableExpenses, row, where: '$columnId = ?', whereArgs: [id]);
-  }
-
-  Future<int> updateSavingsGoal(int id, Map<String, dynamic> row) async {
-    Database db = await instance.database;
-    return await db.update(tableSavings, row, where: '$columnId = ?', whereArgs: [id]);
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:project1/services/shared_preferences_helper.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -11,11 +11,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
 
   Future<void> login() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String storedEmail = prefs.getString('email') ?? '';
-    String storedPassword = prefs.getString('password') ?? '';
-
-    if (emailController.text == storedEmail && passwordController.text == storedPassword) {
+    Map<String, String> credentials = await SharedPreferencesHelper.getUserCredentials();
+    if (emailController.text == credentials['email'] && passwordController.text == credentials['password']) {
       Navigator.pushNamed(context, '/dashboard');
     } else {
       print('Login failed');
@@ -23,10 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> signup() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('email', emailController.text);
-    prefs.setString('password', passwordController.text);
-
+    SharedPreferencesHelper.saveUserCredentials(emailController.text, passwordController.text);
     Navigator.pushNamed(context, '/dashboard');
   }
 

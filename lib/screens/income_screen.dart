@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:project1/services/db_helper.dart';
 
 class IncomeScreen extends StatefulWidget {
   @override
@@ -7,13 +7,17 @@ class IncomeScreen extends StatefulWidget {
 }
 
 class _IncomeScreenState extends State<IncomeScreen> {
+  final TextEditingController sourceController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
-  String category = 'Salary';
+  final DatabaseHelper dbHelper = DatabaseHelper.instance;
 
   Future<void> addIncome() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    double income = prefs.getDouble('income') ?? 0;
-    prefs.setDouble('income', income + double.parse(amountController.text));
+    Map<String, dynamic> income = {
+      'source': sourceController.text,
+      'amount': double.parse(amountController.text),
+      'date': DateTime.now().toString(),
+    };
+    await dbHelper.insertIncome(income);
     Navigator.pop(context);
   }
 
@@ -25,18 +29,8 @@ class _IncomeScreenState extends State<IncomeScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            TextField(controller: sourceController, decoration: InputDecoration(labelText: 'Source')),
             TextField(controller: amountController, decoration: InputDecoration(labelText: 'Amount')),
-            DropdownButton<String>(
-              value: category,
-              onChanged: (String newValue) {
-                setState(() {
-                  category = newValue;
-                });
-              },
-              items: <String>['Salary', 'Freelance', 'Other'].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(value: value, child: Text(value));
-              }).toList(),
-            ),
             ElevatedButton(onPressed: addIncome, child: Text("Save Income")),
           ],
         ),
