@@ -4,7 +4,12 @@ class Income {
   double amount;
   String date;
 
-  Income({this.id, this.source, this.amount, this.date});
+  Income({
+    this.id = 0,
+    this.source = '',
+    this.amount = 0.0,
+    this.date = '',
+  });
 
   // Convert Income into a Map for SQLite
   Map<String, dynamic> toMap() {

@@ -27,21 +27,29 @@ class DatabaseHelper {
   // Singleton instance
   static final DatabaseHelper instance = DatabaseHelper._init();
 
-  static Database _database;
+  // Make _database nullable to handle initialization properly
+  static Database? _database;
 
   DatabaseHelper._init();
 
+  // Getter for the database
   Future<Database> get database async {
-    if (_database != null) return _database;
-    _database = await _initDB();
-    return _database;
+    // Use ??= to initialize the database if it's null
+    _database ??= await _initDB();
+    return _database!;
   }
 
+  // Initialize the database
   Future<Database> _initDB() async {
     String path = join(await getDatabasesPath(), _databaseName);
-    return await openDatabase(path, version: _databaseVersion, onCreate: _onCreate);
+    return await openDatabase(
+      path,
+      version: _databaseVersion,
+      onCreate: _onCreate,
+    );
   }
 
+  // Create tables
   Future _onCreate(Database db, int version) async {
     // Create table for expenses
     await db.execute('''
@@ -112,28 +120,50 @@ class DatabaseHelper {
 
   Future<int> updateSavingsGoal(int id, Map<String, dynamic> row) async {
     Database db = await instance.database;
-    return await db.update(tableSavings, row, where: '$columnId = ?', whereArgs: [id]);
+    return await db.update(
+      tableSavings,
+      row,
+      where: '$columnId = ?',
+      whereArgs: [id],
+    );
   }
 
   Future<int> updateExpense(int id, Map<String, dynamic> row) async {
     Database db = await instance.database;
-    return await db.update(tableExpenses, row, where: '$columnId = ?', whereArgs: [id]);
+    return await db.update(
+      tableExpenses,
+      row,
+      where: '$columnId = ?',
+      whereArgs: [id],
+    );
   }
 
   // DELETE operations
 
   Future<int> deleteExpense(int id) async {
     Database db = await instance.database;
-    return await db.delete(tableExpenses, where: '$columnId = ?', whereArgs: [id]);
+    return await db.delete(
+      tableExpenses,
+      where: '$columnId = ?',
+      whereArgs: [id],
+    );
   }
 
   Future<int> deleteIncome(int id) async {
     Database db = await instance.database;
-    return await db.delete(tableIncome, where: '$columnId = ?', whereArgs: [id]);
+    return await db.delete(
+      tableIncome,
+      where: '$columnId = ?',
+      whereArgs: [id],
+    );
   }
 
   Future<int> deleteSavingsGoal(int id) async {
     Database db = await instance.database;
-    return await db.delete(tableSavings, where: '$columnId = ?', whereArgs: [id]);
+    return await db.delete(
+      tableSavings,
+      where: '$columnId = ?',
+      whereArgs: [id],
+    );
   }
 }

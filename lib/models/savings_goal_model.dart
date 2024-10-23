@@ -4,7 +4,12 @@ class SavingsGoal {
   double goalAmount;
   double currentAmount;
 
-  SavingsGoal({this.id, this.goalName, this.goalAmount, this.currentAmount});
+  SavingsGoal({
+    required this.id,
+    required this.goalName,
+    required this.goalAmount,
+    required this.currentAmount,
+  });
 
   // Convert a SavingsGoal into a Map for SQLite
   Map<String, dynamic> toMap() {

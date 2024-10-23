@@ -4,7 +4,13 @@ class Expense {
   double amount;
   String date;
 
-  Expense({this.id, this.description, this.amount, this.date});
+Expense({
+    this.id = 0,
+    this.description = '',
+    this.amount = 0.0,
+    this.date = '',
+  });
+ 
 
   // Convert an Expense into a Map for SQLite
   Map<String, dynamic> toMap() {
