@@ -9,18 +9,43 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  String errorMessage = '';
 
   Future<void> login() async {
+    // Retrieve saved credentials from SharedPreferences
     Map<String, String> credentials = await SharedPreferencesHelper.getUserCredentials();
-    if (emailController.text == credentials['email'] && passwordController.text == credentials['password']) {
+    String savedEmail = credentials['email'] ?? '';
+    String savedPassword = credentials['password'] ?? '';
+
+    // Check if the email and password fields are empty
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      setState(() {
+        errorMessage = 'Please fill in all fields.';
+      });
+      return;
+    }
+
+    // Validate credentials
+    if (emailController.text == savedEmail && passwordController.text == savedPassword) {
       Navigator.pushNamed(context, '/dashboard');
     } else {
-      print('Login failed');
+      setState(() {
+        errorMessage = 'Login failed. Incorrect email or password.';
+      });
     }
   }
 
   Future<void> signup() async {
-    SharedPreferencesHelper.saveUserCredentials(emailController.text, passwordController.text);
+    // Check if the email and password fields are empty
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      setState(() {
+        errorMessage = 'Please fill in all fields.';
+      });
+      return;
+    }
+
+    // Save credentials to SharedPreferences
+    await SharedPreferencesHelper.saveUserCredentials(emailController.text, passwordController.text);
     Navigator.pushNamed(context, '/dashboard');
   }
 
@@ -32,11 +57,30 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(controller: emailController, decoration: InputDecoration(labelText: 'Email')),
-            TextField(controller: passwordController, decoration: InputDecoration(labelText: 'Password'), obscureText: true),
+            TextField(
+              controller: emailController,
+              decoration: InputDecoration(labelText: 'Email'),
+            ),
+            TextField(
+              controller: passwordController,
+              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true,
+            ),
             SizedBox(height: 20),
-            ElevatedButton(onPressed: login, child: Text("Login")),
-            ElevatedButton(onPressed: signup, child: Text("Sign Up")),
+            if (errorMessage.isNotEmpty)
+              Text(
+                errorMessage,
+                style: TextStyle(color: Colors.red),
+              ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: login,
+              child: Text("Login"),
+            ),
+            ElevatedButton(
+              onPressed: signup,
+              child: Text("Sign Up"),
+            ),
           ],
         ),
       ),
