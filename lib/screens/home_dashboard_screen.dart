@@ -43,6 +43,12 @@ class _HomeDashboardState extends State<HomeDashboard> {
               },
               child: Text("Add Expenses"),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/investments'); // New button for Investments page
+              },
+              child: Text("Add Investments"),
+            ),
           ],
         ),
       ),

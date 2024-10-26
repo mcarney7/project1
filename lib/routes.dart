@@ -5,6 +5,7 @@ import 'package:project1/screens/income_screen.dart';
 import 'package:project1/screens/expense_screen.dart';
 import 'package:project1/screens/savings_goal_screen.dart';
 import 'package:project1/screens/report_screen.dart';
+import 'package:project1/screens/investment_screen.dart'; // Import Investment Screen
 
 // Define a Map of routes
 final Map<String, WidgetBuilder> appRoutes = {
@@ -14,6 +15,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/expenses': (context) => ExpenseScreen(),        // Expense Screen
   '/savings': (context) => SavingsGoalScreen(),     // Savings Goal Screen
   '/reports': (context) => ReportScreen(),          // Report Screen
+  '/investments': (context) => InvestmentScreen(),  // Investment Screen - New Route
 };
 
 // Function to generate routes for the app
@@ -28,11 +30,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
   // Fallback to a default screen if the route is not found
   return MaterialPageRoute(
-    builder: (context) => UnknownRouteScreen(), // You can replace this with a custom "Page Not Found" screen
+    builder: (context) => UnknownRouteScreen(),
   );
 }
 
-// Optional: Screen to display when a route is not found
+// Screen to display when a route is not found
 class UnknownRouteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
