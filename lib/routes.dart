@@ -5,7 +5,8 @@ import 'package:project1/screens/income_screen.dart';
 import 'package:project1/screens/expense_screen.dart';
 import 'package:project1/screens/savings_goal_screen.dart';
 import 'package:project1/screens/report_screen.dart';
-import 'package:project1/screens/investment_screen.dart'; // Import Investment Screen
+import 'package:project1/screens/investment_screen.dart';
+import 'package:project1/screens/girl_math_calculator_screen.dart'; // Import the new screen
 
 // Define a Map of routes
 final Map<String, WidgetBuilder> appRoutes = {
@@ -15,7 +16,8 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/expenses': (context) => ExpenseScreen(),        // Expense Screen
   '/savings': (context) => SavingsGoalScreen(),     // Savings Goal Screen
   '/reports': (context) => ReportScreen(),          // Report Screen
-  '/investments': (context) => InvestmentScreen(),  // Investment Screen - New Route
+  '/investments': (context) => InvestmentScreen(),  // Investment Screen
+  '/girl_math_calculator': (context) => GirlMathCalculatorScreen(), // Girl Math Calculator Screen
 };
 
 // Function to generate routes for the app

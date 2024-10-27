@@ -27,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     // Validate credentials
     if (emailController.text == savedEmail && passwordController.text == savedPassword) {
+      // If the credentials match, navigate to the dashboard
       Navigator.pushNamed(context, '/dashboard');
     } else {
       setState(() {
@@ -46,6 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     // Save credentials to SharedPreferences
     await SharedPreferencesHelper.saveUserCredentials(emailController.text, passwordController.text);
+
+    // After successful signup, navigate to the dashboard
     Navigator.pushNamed(context, '/dashboard');
   }
 
@@ -57,9 +60,15 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            Text(
+              "Welcome to GirlFunds",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
             TextField(
               controller: emailController,
               decoration: InputDecoration(labelText: 'Email'),
+              keyboardType: TextInputType.emailAddress,
             ),
             TextField(
               controller: passwordController,
