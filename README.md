@@ -1,19 +1,6 @@
 # project1
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The Personal Finance Manager app is designed to empower female users with a comprehensive, user-friendly solution for managing their finances. Built using Flutter, the app offers a seamless experience for tracking income, expenses, savings goals, and investments. It features a clean, intuitive interface with distinct screens dedicated to each financial function, allowing users to navigate effortlessly between income logging, expense monitoring, goal-setting, and investment management. The app utilizes local storage to ensure that all financial data is securely stored on the device, enhancing privacy and accessibility. Targeted toward women seeking better financial control, the app embraces an iterative design approach, integrating user feedback to refine features and ensure an optimal user experience. By offering a holistic financial management tool, the app aims to help users achieve their financial goals more efficiently, making budgeting and saving simple and effective.
 
 
 Presentation Youtube Link: https://www.youtube.com/watch?v=t7zXzYm3n5g
