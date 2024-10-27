@@ -54,6 +54,9 @@ class _HomeDashboardState extends State<HomeDashboard> {
       case 4:
         Navigator.pushNamed(context, '/reports');
         break;
+      case 5:
+        Navigator.pushNamed(context, '/investments');
+        break;
     }
   }
 
@@ -144,6 +147,12 @@ class _HomeDashboardState extends State<HomeDashboard> {
                   color: Colors.orange[300]!,
                   route: '/reports',
                 ),
+                _buildDashboardCard(
+                  title: "Investments",
+                  icon: Icons.trending_up,
+                  color: Colors.teal[300]!,
+                  route: '/investments',
+                ),
               ],
             ),
             SizedBox(height: 20),
@@ -188,6 +197,10 @@ class _HomeDashboardState extends State<HomeDashboard> {
           BottomNavigationBarItem(
             icon: Icon(Icons.pie_chart),
             label: 'Reports',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.trending_up),
+            label: 'Investments',
           ),
         ],
         currentIndex: _selectedIndex,
